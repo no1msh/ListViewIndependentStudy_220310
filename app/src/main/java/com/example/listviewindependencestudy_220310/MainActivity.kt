@@ -1,8 +1,10 @@
 package com.example.listviewindependencestudy_220310
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.listviewindependencestudy_220310.adapters.CharacterAdapter
 import com.example.listviewindependencestudy_220310.datas.CharacterData
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,10 +25,29 @@ class MainActivity : AppCompatActivity() {
     fun setEvent(){
         mainListView.setOnItemClickListener { parent, view, position, id ->
 
-            val ClickedCharacter = mCharacterList[position]
+            val clickedCharacter = mCharacterList[position]
 
-            Toast.makeText(this, "${ClickedCharacter.name} is Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${clickedCharacter.name} is Clicked", Toast.LENGTH_SHORT).show()
             
+        }
+
+        mainListView.setOnItemLongClickListener { parent, view, position, id ->
+
+            val longClickedCharacter = mCharacterList[position]
+
+            val alert = AlertDialog.Builder(this)
+                .setTitle("캐릭터 삭제")
+                .setMessage("정말 캐릭터를 삭제할까요?")
+                .setPositiveButton("네",DialogInterface.OnClickListener { dialog, which ->
+
+                    mCharacterList.remove(longClickedCharacter)
+
+                    mAdapter.notifyDataSetChanged()
+                })
+                .setNegativeButton("아니요",null)
+                .show()
+
+            return@setOnItemLongClickListener true
         }
     }
     
