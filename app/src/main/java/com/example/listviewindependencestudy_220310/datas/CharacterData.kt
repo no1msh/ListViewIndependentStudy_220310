@@ -4,5 +4,6 @@ class CharacterData(
     val name : String,
     val heroPosition : String,
     val country : String,
+    val imgUrl : String,
 ) {
 }
